@@ -13,6 +13,7 @@
 | 超时获取锁 | 不允许 | 允许 |
 | 是否可以实现公平锁 | 否 | 是 |
 | 实现方式 | JVM级别 | API级别 |
+
 ReentrantLock相比synchronized更灵活一些
 
 ### ReentrantLock方法测试
@@ -26,7 +27,7 @@ ReentrantLock是Lock接口的其中一个实现类，Lock接口中定义的方�
 
 lock和tryLock方法除了返回值不一样以外，lock获取到的锁是不可响应中断的，而tryLock获取到的锁是可响应中断的。除此以外tryLock(long time, TimeUnit unit)获取到的锁也是可响应中断，即获取锁的方法中只有lock方法获取到的锁是不可以响应中断的
 
-**lockInterruptibly响应中断：**ReentrantLockLockInterruptiblyTest.java
+**lockInterruptibly响应中断：ReentrantLockLockInterruptiblyTest.java**
 ```
 public class ReentrantLockLockInterruptiblyTest {
     public static void main(String[] args) throws InterruptedException {
@@ -84,7 +85,7 @@ End...
 ```
 中断成功
 
-**synchronize响应中断：**
+**synchronize响应中断：SynchronizedBlock.java**
 ```
 public class SynchronizedBlock {
     public static void main(String[] args) throws InterruptedException {
@@ -120,7 +121,7 @@ public class SynchronizedBlock {
 控制台永远不会抛出异常、打印出End
 **对于synchronized来说，如果一个线程在等待锁，调用中断线程的方法，不会生效即不响应中断。而lock可以响应中断**
 
-**tryLock定时锁：**ReentrantLockTryLockTest.java
+**tryLock定时锁：ReentrantLockTryLockTest.java**
 ```
 public class ReentrantLockTryLockTest {
     public static void main(String[] args) {
@@ -283,8 +284,10 @@ SynchronizedLockTest time = 100000000 Spend 99804
 ```
 synchronized和ReentrantLock性能相差不大，分不出谁好谁不好
 
-###synchronized和ReentrantLock之间如何选择
+### synchronized和ReentrantLock之间如何选择
 synchronized和ReentrantLock性能差不多，**当且仅当synchronized无法满足的情景下使用ReentrantLock**，因为ReentrantLock需要显式释放锁，同时synchronized是JVM级别的，JVM能对其进行优化，而Reentrant是API级别的不会有任何优化。synchronized无法满足的情景：
 - 定时获取锁
 - 响应中断
 - 需要以公平的方式获取锁
+
+最后附：[实例代码](https://github.com/TiantianUpup/java-learning/tree/master/src/main/java/com/h2t/study/concurrent/lock)
