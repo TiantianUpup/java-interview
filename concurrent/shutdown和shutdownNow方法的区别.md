@@ -1,3 +1,5 @@
+# shutdown和shutdownNow方法的区别
+
 ### shutdown和shutdownNow方法的区别
 - shutdown => 平缓关闭，等待所有已添加到线程池中的任务执行完在关闭
 - shutdownNow => 立刻关闭，停止正在执行的任务，并返回队列中未执行的任务

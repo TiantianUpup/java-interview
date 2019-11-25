@@ -1,3 +1,5 @@
+# 线程执行任务的取消【标志符+interrupt+cancel+shutdownNow】
+
 ### 使用标志符号
 通过使用一个标志，比如一个布尔类型的flag变量，当flag为true时，则取消正在运行的任务
 实例：
