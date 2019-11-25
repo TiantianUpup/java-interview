@@ -118,7 +118,7 @@ public class SynchronizedBlock {
     }
 }
 ```
-控制台永远不会抛出异常、打印出End
+控制台永远不会抛出异常、打印出End<br/>
 **对于synchronized来说，如果一个线程在等待锁，调用中断线程的方法，不会生效即不响应中断。而lock可以响应中断**
 
 **tryLock定时锁：ReentrantLockTryLockTest.java**
