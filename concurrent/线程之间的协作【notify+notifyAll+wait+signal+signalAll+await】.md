@@ -1,24 +1,24 @@
-> Í¨¹ı»¥³â¡¾synchronized¡¢lock¡¿¿ÉÒÔÊ¹µÃµ±¶à¸öÏß³Ì¾ºÕùÄ³¸ö¹²Ïí×ÊÔ´Ê±£¬ÓĞÇÒÖ»ÓĞÒ»¸öÏß³ÌÄÜ·ÃÎÊµ½¹²Ïí×ÊÔ´¡£µ«ÓĞÊ±ĞèÒªÏß³ÌĞ­×÷Íê³ÉÄ³ÏîÈÎÎñ£¬±ÈÈçAÏß³ÌÍê³ÉÄ³¸öÈÎÎñÖ®ºó£¬BÏß³Ì²ÅÄÜÖ´ĞĞÈÎÎñ£¬javaÌá¹©ÁËÁ½ÖÖ·½Ê½ÊµÏÖÏß³ÌÖ®¼äµÄĞ­×÷£¬Ò»ÊÇObjectÀàÖĞµÄwait¡¢notify¡¢notifyAll·½·¨£¬¶şÊÇConditionÀàÖĞµÄawait¡¢signal·½·¨
+> é€šè¿‡äº’æ–¥ã€synchronizedã€lockã€‘å¯ä»¥ä½¿å¾—å½“å¤šä¸ªçº¿ç¨‹ç«äº‰æŸä¸ªå…±äº«èµ„æºæ—¶ï¼Œæœ‰ä¸”åªæœ‰ä¸€ä¸ªçº¿ç¨‹èƒ½è®¿é—®åˆ°å…±äº«èµ„æºã€‚ä½†æœ‰æ—¶éœ€è¦çº¿ç¨‹åä½œå®ŒæˆæŸé¡¹ä»»åŠ¡ï¼Œæ¯”å¦‚Açº¿ç¨‹å®ŒæˆæŸä¸ªä»»åŠ¡ä¹‹åï¼ŒBçº¿ç¨‹æ‰èƒ½æ‰§è¡Œä»»åŠ¡ï¼Œjavaæä¾›äº†ä¸¤ç§æ–¹å¼å®ç°çº¿ç¨‹ä¹‹é—´çš„åä½œï¼Œä¸€æ˜¯Objectç±»ä¸­çš„waitã€notifyã€notifyAllæ–¹æ³•ï¼ŒäºŒæ˜¯Conditionç±»ä¸­çš„awaitã€signalæ–¹æ³•
 
-### Object#wait¡¢notify¡¢notifyAll
-- wait => Ïß³ÌµÄÖ´ĞĞ¹ÒÆğ£¬²¢ÇÒÊÍ·Å³ÖÓĞµÄËø¡£½øÈë¸Ã¶ÔÏóµÄµÈ´ı³ØµÈ´ı±»»½ĞÑ
-- notify => **Ëæ»ú**»½ĞÑµÈ´ı¸ÃËøµÄÏß³Ì£¬ÆäÓàÏß³Ì½«¼ÌĞøµÈ´ınotify»ònotifyAll·½·¨»½ĞÑ¡£½øÈë¸Ã¶ÔÏóµÄËø³Ø¾ºÕùËø
-- notifyAll => »½ĞÑËùÓĞµÈ´ı¸ÃËøµÄÏß³Ì£¬²¢ÇÒÖ»ÓĞÒ»¸öÏß³ÌÄÜ»ñÈ¡Ëø¡£½øÈë¸Ã¶ÔÏóµÄËø³Ø¾ºÕùËø
+### Object#waitã€notifyã€notifyAll
+- wait => çº¿ç¨‹çš„æ‰§è¡ŒæŒ‚èµ·ï¼Œå¹¶ä¸”é‡Šæ”¾æŒæœ‰çš„é”ã€‚è¿›å…¥è¯¥å¯¹è±¡çš„ç­‰å¾…æ± ç­‰å¾…è¢«å”¤é†’
+- notify => **éšæœº**å”¤é†’ç­‰å¾…è¯¥é”çš„çº¿ç¨‹ï¼Œå…¶ä½™çº¿ç¨‹å°†ç»§ç»­ç­‰å¾…notifyæˆ–notifyAllæ–¹æ³•å”¤é†’ã€‚è¿›å…¥è¯¥å¯¹è±¡çš„é”æ± ç«äº‰é”
+- notifyAll => å”¤é†’æ‰€æœ‰ç­‰å¾…è¯¥é”çš„çº¿ç¨‹ï¼Œå¹¶ä¸”åªæœ‰ä¸€ä¸ªçº¿ç¨‹èƒ½è·å–é”ã€‚è¿›å…¥è¯¥å¯¹è±¡çš„é”æ± ç«äº‰é”
 
-ÆäÖĞwait·½·¨ÖĞÊÇ¿ÉÒÔÓĞ²ÎÊı£¬waitÓĞÈı¸öÖØÔØ·½·¨£¬·Ö±ğÎªwait()¡¢wait(long timeout)¡¢wait(long timeout, int nanos)¡£wait()·½·¨Ïàµ±ÓÚwait(0)£¬ÓÀÔ¶µÈ´ı£¬¶øµ÷ÓÃwait(long timeout)½«µÈ´ıtimeoutÊ±¼äÈ»ºóÖØĞÂÈ¥¾ºÕùËø£¬wait(long timeout, int nanos)µÈ´ıµÄÊ±¼ä½«ÓĞÁ½²¿·Ö×é³É£¬µ÷ÓÃwait(long timeout, int nanos)·½·¨µÄÏß³Ì½«µÈ´ı1000000*timeout+nanosµÄÊ±¼äÈ»ºóÔÚÈ¥¾ºÕùËø
+å…¶ä¸­waitæ–¹æ³•ä¸­æ˜¯å¯ä»¥æœ‰å‚æ•°ï¼Œwaitæœ‰ä¸‰ä¸ªé‡è½½æ–¹æ³•ï¼Œåˆ†åˆ«ä¸ºwait()ã€wait(long timeout)ã€wait(long timeout, int nanos)ã€‚wait()æ–¹æ³•ç›¸å½“äºwait(0)ï¼Œæ°¸è¿œç­‰å¾…ï¼Œè€Œè°ƒç”¨wait(long timeout)å°†ç­‰å¾…timeoutæ—¶é—´ç„¶åé‡æ–°å»ç«äº‰é”ï¼Œwait(long timeout, int nanos)ç­‰å¾…çš„æ—¶é—´å°†æœ‰ä¸¤éƒ¨åˆ†ç»„æˆï¼Œè°ƒç”¨wait(long timeout, int nanos)æ–¹æ³•çš„çº¿ç¨‹å°†ç­‰å¾…1000000*timeout+nanosçš„æ—¶é—´ç„¶ååœ¨å»ç«äº‰é”
 
-**×¢Òâ£º**
-- ±ØĞëÔÚÍ¬²½´úÂë¿é»òÍ¬²½·½·¨Àïµ÷ÓÃwait¡¢notify¡¢notifyAll·½·¨£¬·ñÔò½«Å×³öIllegalMonitorStateExceptionÒì³£
-- µ÷ÓÃnotify»ònotifyAll·½·¨ÒÔºó£¬±»»½ĞÑµÄÏß³Ì²»»áÁ¢¼´»ñÈ¡Ëø£¬¶øÊÇµÈ´ınotify»ònotifyAllÍË³öÍ¬²½·½·¨»òÍ¬²½´úÂë¿é 
+**æ³¨æ„ï¼š**
+- å¿…é¡»åœ¨åŒæ­¥ä»£ç å—æˆ–åŒæ­¥æ–¹æ³•é‡Œè°ƒç”¨waitã€notifyã€notifyAllæ–¹æ³•ï¼Œå¦åˆ™å°†æŠ›å‡ºIllegalMonitorStateExceptionå¼‚å¸¸
+- è°ƒç”¨notifyæˆ–notifyAllæ–¹æ³•ä»¥åï¼Œè¢«å”¤é†’çš„çº¿ç¨‹ä¸ä¼šç«‹å³è·å–é”ï¼Œè€Œæ˜¯ç­‰å¾…notifyæˆ–notifyAllé€€å‡ºåŒæ­¥æ–¹æ³•æˆ–åŒæ­¥ä»£ç å— 
 
-##### Ê¾Àı´úÂë
-**wait·½·¨ÈÎÎñÀà£ºWaitTask.java**
+##### ç¤ºä¾‹ä»£ç 
+**waitæ–¹æ³•ä»»åŠ¡ç±»ï¼šWaitTask.java**
 ```
 public class WaitTask implements Runnable {
     private List<String> strList;
     
     /**
-     * ÓÃÓÚ±êÊ¶Ïß³Ì
+     * ç”¨äºæ ‡è¯†çº¿ç¨‹
      * */
     private int i;
 
@@ -42,7 +42,7 @@ public class WaitTask implements Runnable {
 }
 ```
 
-**notify·½·¨ÈÎÎñÀà£ºNotifyTask.java**
+**notifyæ–¹æ³•ä»»åŠ¡ç±»ï¼šNotifyTask.java**
 ```
 public class NotifyTask implements Runnable {
     private List<String> strList;
@@ -66,7 +66,7 @@ public class NotifyTask implements Runnable {
 }
 ```
 
-**²âÊÔÀà£ºWaitAndNotifyTest.java**
+**æµ‹è¯•ç±»ï¼šWaitAndNotifyTest.java**
 ```
 public class WaitAndNotifyTest {
     public static void main(String[] args) {
@@ -76,14 +76,14 @@ public class WaitAndNotifyTest {
     }
 }
 ```
-**Ö´ĞĞ½á¹û£º**
+**æ‰§è¡Œç»“æœï¼š**
 ```
 Wake up thread after 3000 milliSecond
 Thread i = 1 arose and Cost = 3001 
 ```
-µ÷ÓÃwaitºÍnotify·½·¨µÄÍ¬²½´úÂë¿éÀï¶¼ÊÇList<String> strList¶ÔÏó£¬3000ºÁÃëÒÔºóµ÷ÓÃnotify·½·¨»½ĞÑµÈ´ıµÄÏß³Ì¡£ÒòÎª´ËÊ±Ö»ÓĞÒ»¸öÏß³Ì¹ÒÆğÒò´Ë½«Á¢¼´»ñÈ¡ËøÖ´ĞĞ
+è°ƒç”¨waitå’Œnotifyæ–¹æ³•çš„åŒæ­¥ä»£ç å—é‡Œéƒ½æ˜¯List<String> strListå¯¹è±¡ï¼Œ3000æ¯«ç§’ä»¥åè°ƒç”¨notifyæ–¹æ³•å”¤é†’ç­‰å¾…çš„çº¿ç¨‹ã€‚å› ä¸ºæ­¤æ—¶åªæœ‰ä¸€ä¸ªçº¿ç¨‹æŒ‚èµ·å› æ­¤å°†ç«‹å³è·å–é”æ‰§è¡Œ
 
-**²âÊÔnotify·½·¨Ëæ»ú»½ĞÑ£ºWaitAndNotifyTest.java**
+**æµ‹è¯•notifyæ–¹æ³•éšæœºå”¤é†’ï¼šWaitAndNotifyTest.java**
 ```
 public class WaitAndNotifyTest {
     public static void main(String[] args) {
@@ -96,14 +96,14 @@ public class WaitAndNotifyTest {
     }
 }
 ```
-**Ö´ĞĞ½á¹û£º**
+**æ‰§è¡Œç»“æœï¼š**
 ```
 Wake up thread after 3000 milliSecond
 Thread i = 3 arose and Cost = 3001 
 ```
-µÚÈı¸öÏß³Ì±»»½ĞÑ£¬ÆäÓàÏß³Ì½«¼ÌĞøµÈ´ı±»»½ĞÑ£¬¼´Ê¹ËøÒÑ¾­²»±»ÆäËûÏß³ÌËùÕ¼ÓĞ
+ç¬¬ä¸‰ä¸ªçº¿ç¨‹è¢«å”¤é†’ï¼Œå…¶ä½™çº¿ç¨‹å°†ç»§ç»­ç­‰å¾…è¢«å”¤é†’ï¼Œå³ä½¿é”å·²ç»ä¸è¢«å…¶ä»–çº¿ç¨‹æ‰€å æœ‰
 
-**²âÊÔnotifyAll·½·¨»½ĞÑÈ«²¿£ºWaitAndNotifyAllTest**
+**æµ‹è¯•notifyAllæ–¹æ³•å”¤é†’å…¨éƒ¨ï¼šWaitAndNotifyAllTest**
 ```
 public class WaitAndNotifyAllTest {
     public static void main(String[] args) {
@@ -116,7 +116,7 @@ public class WaitAndNotifyAllTest {
     }
 }
 ```
-**notifyAll·½·¨ÈÎÎñÀà£ºNotifyAllTask.java**
+**notifyAllæ–¹æ³•ä»»åŠ¡ç±»ï¼šNotifyAllTask.java**
 ```
 public class NotifyAllTask implements Runnable {
     private List<String> strList;
@@ -139,7 +139,7 @@ public class NotifyAllTask implements Runnable {
     }
 }
 ```
-**Ö´ĞĞ½á¹û£º**
+**æ‰§è¡Œç»“æœï¼š**
 ```
 Wake up thread after 3000 milliSecond
 Thread i = 3 arose and Cost = 3001 
@@ -147,35 +147,35 @@ Thread i = 4 arose and Cost = 3029
 Thread i = 2 arose and Cost = 3030 
 Thread i = 1 arose and Cost = 3032 
 ```
-ËùÓĞµÈ´ıµÄÏß³Ì½«±»»½ĞÑ£¬²¢ÇÒ¾ºÕùËøÖ´ĞĞÈÎÎñ
+æ‰€æœ‰ç­‰å¾…çš„çº¿ç¨‹å°†è¢«å”¤é†’ï¼Œå¹¶ä¸”ç«äº‰é”æ‰§è¡Œä»»åŠ¡
 
-### Condition#await¡¢signal¡¢signalAll
-- await => ¶ÔÓ¦ObjectÖĞµÄwait·½·¨£¬µ÷ÓÃinterrupt·½·¨½«»áÅ×³öÒì³£
-- signal => ¶ÔÓ¦ObjectÖĞµÄnotify·½·¨
-- signalAll => ¶ÔÓ¦ObjectÖĞµÄnotifyAll·½·¨
-- awaitUninterruptibly => ºÍawait·½·¨ÀàËÆ£¬µ«ÊÇawaitUninterruptiblyµ÷ÓÃinterrupt·½·¨½«²»»á±¨´í
-- awaitNanos => µÈ´ıÖ¸¶¨µÄÊ±¼äÔÚÈ¥»½ĞÑ¹ÒÆğµÄÏß³Ì
-- awaitUntil => Í¨¹ı´«µİÒ»¸öDate£¬Ö±µ½ÄÇ¸öÈÕÆÚÔÚ»½ĞÑ¹ÒÆğµÄÏß³Ì
+### Condition#awaitã€signalã€signalAll
+- await => å¯¹åº”Objectä¸­çš„waitæ–¹æ³•ï¼Œè°ƒç”¨interruptæ–¹æ³•å°†ä¼šæŠ›å‡ºå¼‚å¸¸
+- signal => å¯¹åº”Objectä¸­çš„notifyæ–¹æ³•
+- signalAll => å¯¹åº”Objectä¸­çš„notifyAllæ–¹æ³•
+- awaitUninterruptibly => å’Œawaitæ–¹æ³•ç±»ä¼¼ï¼Œä½†æ˜¯awaitUninterruptiblyè°ƒç”¨interruptæ–¹æ³•å°†ä¸ä¼šæŠ¥é”™
+- awaitNanos => ç­‰å¾…æŒ‡å®šçš„æ—¶é—´åœ¨å»å”¤é†’æŒ‚èµ·çš„çº¿ç¨‹
+- awaitUntil => é€šè¿‡ä¼ é€’ä¸€ä¸ªDateï¼Œç›´åˆ°é‚£ä¸ªæ—¥æœŸåœ¨å”¤é†’æŒ‚èµ·çš„çº¿ç¨‹
 
-ÆäÖĞawaitÓĞÁ½¸öÖØÔØ·½·¨Ò»¸öÊÇawait()ÓÀÔ¶µÈ´ı£¬ÁíÍâÒ»¸öÊÇawait(long time, TimeUnit unit)£¬¿ÉÒÔÖ»µ±Ê±¼äºÍÊ±¼äµ¥Î»£¬Ìá¹©¸üÁé»îµÄÊ±¼ä·¶Î§
+å…¶ä¸­awaitæœ‰ä¸¤ä¸ªé‡è½½æ–¹æ³•ä¸€ä¸ªæ˜¯await()æ°¸è¿œç­‰å¾…ï¼Œå¦å¤–ä¸€ä¸ªæ˜¯await(long time, TimeUnit unit)ï¼Œå¯ä»¥åªå½“æ—¶é—´å’Œæ—¶é—´å•ä½ï¼Œæä¾›æ›´çµæ´»çš„æ—¶é—´èŒƒå›´
 
-**×¢Òâ£º**
-- ËùÓĞ·½·¨±ØĞëÔÚÍ¬²½´úÂë¿éÀïÊ¹ÓÃ£¬·ñÔò½«Å×³öIllegalMonitorStateExceptionÒì³£
-- µ÷ÓÃsignal»òsignalAll·½·¨ÒÔºó£¬±»¹ÒÆğµÄÏß³Ì²»»áÁ¢¼´»ñÈ¡Ëø£¬¶øÊÇµÈ´ısignal»òsignalAllÍË³öÍ¬²½´úÂë¿é 
+**æ³¨æ„ï¼š**
+- æ‰€æœ‰æ–¹æ³•å¿…é¡»åœ¨åŒæ­¥ä»£ç å—é‡Œä½¿ç”¨ï¼Œå¦åˆ™å°†æŠ›å‡ºIllegalMonitorStateExceptionå¼‚å¸¸
+- è°ƒç”¨signalæˆ–signalAllæ–¹æ³•ä»¥åï¼Œè¢«æŒ‚èµ·çš„çº¿ç¨‹ä¸ä¼šç«‹å³è·å–é”ï¼Œè€Œæ˜¯ç­‰å¾…signalæˆ–signalAllé€€å‡ºåŒæ­¥ä»£ç å— 
 
-### ÊµÀı´úÂë
-**await·½·¨ÈÎÎñÀà£ºAwaitTask.java**
+### å®ä¾‹ä»£ç 
+**awaitæ–¹æ³•ä»»åŠ¡ç±»ï¼šAwaitTask.java**
 ```
 public class AwaitTask implements Runnable {
     /**
-     * Ëø
+     * é”
      * */
     private Lock lock;
 
     private Condition condition;
 
     /**
-     * Ïß³Ì±êÊ¶·û
+     * çº¿ç¨‹æ ‡è¯†ç¬¦
      * */
     private int i;
 
@@ -200,11 +200,11 @@ public class AwaitTask implements Runnable {
     }
 }
 ```
-**signalÈÎÎñÀà£ºSignalTask.java**
+**signalä»»åŠ¡ç±»ï¼šSignalTask.java**
 ```
 public class SignalTask implements Runnable {
     /**
-     * Ëø
+     * é”
      * */
     private Lock lock;
 
@@ -231,7 +231,7 @@ public class SignalTask implements Runnable {
     }
 }
 ```
-**²âÊÔÀà£º AwaitAndSignalTest.java**
+**æµ‹è¯•ç±»ï¼š AwaitAndSignalTest.java**
 ```
 public class AwaitAndSignalTest {
     public static void main(String[] args) {
@@ -245,14 +245,14 @@ public class AwaitAndSignalTest {
     }
 }
 ```
-**Ö´ĞĞ½á¹û£º**
+**æ‰§è¡Œç»“æœï¼š**
 ```
 Wake up thread after 3000 milliSecond
 Thread i = 1 arose and Cost = 3002 
 ```
-ÏàÍ¬µÄËø¡¢ÏàÍ¬µÄCondition¶ÔÏó£¬ÓĞÇÒÖ»ÓĞÒ»¸öÏß³Ì±»»½ĞÑ
+ç›¸åŒçš„é”ã€ç›¸åŒçš„Conditionå¯¹è±¡ï¼Œæœ‰ä¸”åªæœ‰ä¸€ä¸ªçº¿ç¨‹è¢«å”¤é†’
 
-**²âÊÔsignalAll»½ĞÑËùÓĞÏß³Ì£ºAwaitAndSignalAllTest.java**
+**æµ‹è¯•signalAllå”¤é†’æ‰€æœ‰çº¿ç¨‹ï¼šAwaitAndSignalAllTest.java**
 ```
 public class AwaitAndSignalAllTest {
     public static void main(String[] args) {
@@ -267,11 +267,11 @@ public class AwaitAndSignalAllTest {
 }
 ```
 
-**signalAll·½·¨ÈÎÎñÀà£º**
+**signalAllæ–¹æ³•ä»»åŠ¡ç±»ï¼š**
 ```
 public class SignalAllTask implements Runnable {
     /**
-     * Ëø
+     * é”
      * */
     private Lock lock;
 
@@ -298,7 +298,7 @@ public class SignalAllTask implements Runnable {
     }
 }
 ```
-**Ö´ĞĞ½á¹û£º**
+**æ‰§è¡Œç»“æœï¼š**
 ```
 Wake up thread after 3000 milliSecond
 Thread i = 2 arose and Cost = 3003 
@@ -306,6 +306,6 @@ Thread i = 3 arose and Cost = 3028
 Thread i = 1 arose and Cost = 3028 
 Thread i = 4 arose and Cost = 3028 
 ```
-ËùÓĞ¹ÒÆğµÄÏß³Ì½«±»»½ĞÑ£¬Í¨¹ı¾ºÕùËøÖ´ĞĞÈÎÎñ
+æ‰€æœ‰æŒ‚èµ·çš„çº¿ç¨‹å°†è¢«å”¤é†’ï¼Œé€šè¿‡ç«äº‰é”æ‰§è¡Œä»»åŠ¡
 
-×îºó¸½£º[ÊµÀı´úÂë]()
+æœ€åé™„ï¼š[å®ä¾‹ä»£ç ]()
