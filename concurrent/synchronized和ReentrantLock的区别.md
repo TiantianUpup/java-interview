@@ -1,4 +1,4 @@
-# synchronized和ReentrantLock的区别
+> synchronized和ReentrantLock的区别
 
 ### 相同点
 - 互斥 => 同时只有一个线程获取锁
@@ -11,9 +11,8 @@
 |加锁释放锁方式 | 使用者无需关心，自动加锁、释放锁 | 显式加锁、释放锁，必须调用lock方法获取锁，调用unlock方法释放锁 |
 | 中断 | 不可响应中断| 可响应中断 |
 | 超时获取锁 | 不允许 | 允许 |
-| 是否可以实现公平锁 | 否 | 是 |
+| 是否可以实现公平锁 | 否，默认就为非公平锁 | 是，通过构造函数指定是否为公平锁，默认为非公平锁，传入true为公平锁 |
 | 实现方式 | JVM级别 | API级别 |
-
 ReentrantLock相比synchronized更灵活一些
 
 ### ReentrantLock方法测试
@@ -118,7 +117,7 @@ public class SynchronizedBlock {
     }
 }
 ```
-控制台永远不会抛出异常、打印出End<br/>
+控制台永远不会抛出异常、打印出End
 **对于synchronized来说，如果一个线程在等待锁，调用中断线程的方法，不会生效即不响应中断。而lock可以响应中断**
 
 **tryLock定时锁：ReentrantLockTryLockTest.java**
@@ -174,6 +173,121 @@ run方法中调用了加锁的方法，加锁方法中尝试在2s内获得锁
 i = 0 获取到锁，耗时：0
 i = 1 获取到锁失败，耗时：2001
 ```
+
+** ReentrantLock公平锁与非公平锁：ReentrantLockFairTest.java**
+```
+public class ReentrantLockFairTest {
+    //通过传入true创建一个公平锁
+    private static Lock fairLock = new ReentrantLock(true);
+    //非公平锁，默认为非公平锁
+    private static Lock unfairLock = new ReentrantLock();
+
+    public static void main(String[] args) {
+        ExecutorService unfairEs = Executors.newCachedThreadPool();
+        ExecutorService fairEs = Executors.newCachedThreadPool();
+
+        for (int i = 0; i < 5; i++) {
+            unfairEs.execute(new UnfairTask(i));
+            fairEs.execute(new FairTask(i));
+        }
+    }
+
+    /**
+     * 非公平锁任务
+     * */
+    private static class UnfairTask implements Runnable {
+        private int i;
+
+        public UnfairTask(int i) {
+            this.i = i;
+        }
+
+        @Override
+        public void run() {
+            unfairLock.lock();
+            try {
+                System.out.println(String.format("unfairTask i = %d is running", i));
+            } finally {
+                unfairLock.unlock();
+            }
+        }
+    }
+
+    /**
+     * 公平锁任务
+     * */
+    private static class FairTask implements Runnable {
+        private int i;
+
+        public FairTask(int i) {
+            this.i = i;
+        }
+
+        @Override
+        public void run() {
+            fairLock.lock();
+            try {
+                System.out.println(String.format("fairTask i = %d is running", i));
+            } finally {
+                fairLock.unlock();
+            }
+        }
+    }
+}
+```
+执行结果：
+```
+unfairTask i = 0 is running
+fairTask i = 0 is running
+unfairTask i = 1 is running
+fairTask i = 1 is running
+unfairTask i = 2 is running
+fairTask i = 3 is running
+unfairTask i = 3 is running
+fairTask i = 2 is running
+fairTask i = 4 is running
+unfairTask i = 4 is running
+```
+公平锁先到先得，因此执行顺序是有序的。非公平锁如果后来提交的线程刚好获取释放掉的锁将获得锁先执行，因此结果执行顺序是无序的
+
+**synchronized非公平锁：**
+```
+public class SynchronizedUnfairTest {
+    public static void main(String[] args) {
+        ExecutorService unfairEs = Executors.newCachedThreadPool();
+
+        for (int i = 0; i < 5; i++) {
+            unfairEs.execute(new UnfairTask(i));
+        }
+    }
+
+    /**
+     * 非公平锁任务
+     * */
+    private static class UnfairTask implements Runnable {
+        private int i;
+
+        public UnfairTask(int i) {
+            this.i = i;
+        }
+
+        @Override
+        public synchronized void run() {
+            System.out.println(String.format("unfairTask i = %d is running", i));
+        }
+    }
+}
+```
+执行结果：
+```
+unfairTask i = 1 is running
+unfairTask i = 0 is running
+unfairTask i = 3 is running
+unfairTask i = 2 is running
+unfairTask i = 4 is running
+```
+synchronized默认为非公平锁，并且只能是非公平锁，因此执行结果顺序是无序的
+
 ### 性能测试
 **ReentrantLock加锁任务：ReentrantLockTask.java**
 ```
@@ -284,10 +398,10 @@ SynchronizedLockTest time = 100000000 Spend 99804
 ```
 synchronized和ReentrantLock性能相差不大，分不出谁好谁不好
 
-### synchronized和ReentrantLock之间如何选择
+###synchronized和ReentrantLock之间如何选择
 synchronized和ReentrantLock性能差不多，**当且仅当synchronized无法满足的情景下使用ReentrantLock**，因为ReentrantLock需要显式释放锁，同时synchronized是JVM级别的，JVM能对其进行优化，而Reentrant是API级别的不会有任何优化。synchronized无法满足的情景：
 - 定时获取锁
 - 响应中断
 - 需要以公平的方式获取锁
 
-最后附：[实例代码](https://github.com/TiantianUpup/java-learning/tree/master/src/main/java/com/h2t/study/concurrent/lock)
+**最后附：**[实例代码](https://github.com/TiantianUpup/java-learning/tree/master/src/main/java/com/h2t/study/concurrent/lock)
