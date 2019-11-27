@@ -1,4 +1,4 @@
-> synchronized和ReentrantLock的区别
+# synchronized和ReentrantLock的区别
 
 ### 相同点
 - 互斥 => 同时只有一个线程获取锁
@@ -13,6 +13,7 @@
 | 超时获取锁 | 不允许 | 允许 |
 | 是否可以实现公平锁 | 否，默认就为非公平锁 | 是，通过构造函数指定是否为公平锁，默认为非公平锁，传入true为公平锁 |
 | 实现方式 | JVM级别 | API级别 |
+
 ReentrantLock相比synchronized更灵活一些
 
 ### ReentrantLock方法测试
@@ -117,7 +118,7 @@ public class SynchronizedBlock {
     }
 }
 ```
-控制台永远不会抛出异常、打印出End
+控制台永远不会抛出异常、打印出End<br>
 **对于synchronized来说，如果一个线程在等待锁，调用中断线程的方法，不会生效即不响应中断。而lock可以响应中断**
 
 **tryLock定时锁：ReentrantLockTryLockTest.java**
@@ -398,7 +399,7 @@ SynchronizedLockTest time = 100000000 Spend 99804
 ```
 synchronized和ReentrantLock性能相差不大，分不出谁好谁不好
 
-###synchronized和ReentrantLock之间如何选择
+### synchronized和ReentrantLock之间如何选择
 synchronized和ReentrantLock性能差不多，**当且仅当synchronized无法满足的情景下使用ReentrantLock**，因为ReentrantLock需要显式释放锁，同时synchronized是JVM级别的，JVM能对其进行优化，而Reentrant是API级别的不会有任何优化。synchronized无法满足的情景：
 - 定时获取锁
 - 响应中断
