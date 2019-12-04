@@ -4,8 +4,8 @@
 本篇文章将从存储、内存、网络、CPU、vim、文本、其他、查找、性能监控与优化十个方面来介绍Linux常用命令，并且只会介绍命令的常用可选参数，更多参数使用命令  --help进行查看
 
 ### 存储
-- **df - h**
-  查看磁盘文件，可以查看文件的大小、使用率、挂载情况
+- **df - h**  
+查看磁盘文件，可以查看文件的大小、使用率、挂载情况
   ```
   Filesystem      Size  Used Avail Use% Mounted on
   /dev/sda3        49G   41G  8.3G  84% /
@@ -24,7 +24,7 @@
   ```
   -h 方便阅读方式显示
 
-- **lsblk**
+- **lsblk**  
 list block的缩写，列出系统上的所有的磁盘列表，包括分区情况，不包含使用率
   ```
   NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
@@ -40,7 +40,7 @@ list block的缩写，列出系统上的所有的磁盘列表，包括分区情�
   sdg      8:96   0  1.8T  0 disk /mnt/disk4
   ```
 
-- **du**
+- **du**  
 disk usage的缩写， 进入指定目录统计子目录占用文件系统数据块（1024字节）的情况。若没有给出指定目录，则对当前目录进行统计
   ```
   16	./.oracle_jre_usage
@@ -54,10 +54,10 @@ disk usage的缩写， 进入指定目录统计子目录占用文件系统数据
   0	./.beeline
   ```
 
-Q&A：
-Q：df和lsblk的区别
-A：lsblk 查看的是block device，也就是逻辑磁盘大小
-      df查看的是file system， 即文件系统层的磁盘大小
+Q&A：  
+Q：df和lsblk的区别  
+A：lsblk 查看的是block device，也就是逻辑磁盘大小  
+    df查看的是file system， 即文件系统层的磁盘大小
 
 ### 网络
 - netstat => 用于显示与IP、TCP、UDP和ICMP协议相关的统计数据，一般用于检验本机各端口的网络连接情况
@@ -87,7 +87,7 @@ Swap:      10485756           0    10485756
 
 
 ### CPU
-- **top**
+- **top**  
 查看各进程CPU使用率
   ```
   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                                                                                                                                  
@@ -131,7 +131,7 @@ vim是查看日志常用的命令之一。vim有三种常用模式，分别是�
 - 输入模式
 - 底层命令模式
 
-进入vim时为命令模式，通过a或者i进入输入模式，输入模式下可以对文本内容进行查找，esc退出输入模式。可以将底层命令模式看作是特殊的命令模式，因为底层命令模式只是执行保存和退出命令。**常用的命令如下：**
+进入vim时为命令模式，通过a或者i进入输入模式，输入模式下可以对文本内容进行查找，esc退出输入模式。可以将底层命令模式看作是特殊的命令模式，因为底层命令模式只是执行保存和退出命令。**常用的命令如下：**  
 **查找：**
 - /关键字：可以一直按n往后继续寻找关键字
 - ?关键字：可以一直按n往前寻找关键字
@@ -154,15 +154,18 @@ which默认是去查找path这个环境变量所规范的路径去查找的。
 ### 文本分析
 - awk => 对文本中的内容进行提取在进行处理
 
-  用法： awk '{pattern + action}' {filenames}
-比如想提取文件的某一列可以使用如下命令：awk '{print $1}' filename
+  用法： awk '{pattern + action}' {filenames}  
+  比如想提取文件的某一列可以使用如下命令：
+  ```
+  awk '{print $1}' filename
+  ```
 - grep => 查找某个文件中的关键字
 - sed => 对文件进行增删改查，现在还没遇到，遇到在进行补充
 
 ### 其他
-- ps => 显示进程号 
-常用用法 ps -ef xxx 或ps aux
-两者的区别只是显示的格式不一样，前者是标准格式，后者是BSD格式
+- ps => 显示进程号  
+常用用法 ps -ef xxx 或ps aux  
+两者的区别只是显示的格式不一样，前者是标准格式，后者是BSD格式  
 想要查看某个应用的进程可搭配使用grep命令
 - tail => 显示指定文件的末尾若干行  
 **可选参数：**
@@ -172,8 +175,8 @@ which默认是去查找path这个环境变量所规范的路径去查找的。
   比如查看日志的最后200行可使用命令：tail -n 200 xxx.log
 
 ### 性能监控与优化
-- **iostat**
- I/O statistics的缩写，对系统整体的磁盘操作活动进行监视，不能针对某个进程
+- **iostat**  
+I/O statistics的缩写，对系统整体的磁盘操作活动进行监视，不能针对某个进程
   ```
   avg-cpu:  %user   %nice %system %iowait  %steal   %idle
              2.93    0.00    1.04    0.02    0.00   96.01
@@ -194,7 +197,7 @@ which默认是去查找path这个环境变量所规范的路径去查找的。
   ```
   表示每隔2s刷新一次，每次刷新后显示3次
 
-- **vmstat**
+- **vmstat**  
 Virtual Meomory Statistics的缩写，对操作系统**整体的**虚拟内存、进程、CPU活动进行监控，无法监控某个进程
   ```
    procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
@@ -227,7 +230,7 @@ Virtual Meomory Statistics的缩写，对操作系统**整体的**虚拟内存�
 
   cs和wa、id是比较重要的参数，如果cs的值比较大，则吞吐量很低
 
-- **mpstat**
+- **mpstat**  
 查看所有CPU的信息或指定CPU的信息
   ```
   11:09:41 AM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
